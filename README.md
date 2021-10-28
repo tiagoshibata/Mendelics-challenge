@@ -47,6 +47,6 @@ chr22   43180898        .       G       A       202.179 .       DP=71;VDB=0.4438
 
 9/10 entradas do gabarito estão presentes. A entrada `chr22   29441577        .       TTCC    T` não foi encontrada. Testei o mapeamento com outros parâmetros e com as ferramentas minimap2 e bbmap, ou ajustar o score do bcftools, e não consegui um bom match para essa entrada.
 
-Vídeo:
+Vídeo com execução do pipeline e script de validação:
 
-
+https://asciinema.org/a/445361
