@@ -7,6 +7,6 @@ ans=$(grep -v '^#' dataset/pequeno-gabarito.vcf | awk '{print $1"\t"$2"\t"$3"\t"
 echo "Gabarito ($(echo "$ans" | wc -l) entradas):"
 echo "$ans"
 
-result=$(grep -f <(echo "$ans") amostra-lbb.vcf)
+result=$(zcat amostra-lbb.vcf.gz | grep -f <(echo "$ans"))
 echo "Resultado ($(echo "$result" | wc -l) entradas):"
 echo "$result"
