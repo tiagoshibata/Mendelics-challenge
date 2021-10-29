@@ -19,10 +19,10 @@ bowtie2 -D200 --very-sensitive -D200 -p 24 -x index/grch38.chr22 -1 dataset/amos
 
 echo 'Converting to BAM...'
 samtools sort mapped_day2.sam -o mapped_day2.bam
-sambamba view -h -t 24 -f bam -F '[XS] == null' mapped_day2.bam > filtered_day2.bam
+sambamba view -h -t 24 -f bam -F '[XS] == null and mapping_quality >= 20' mapped_day2.bam > filtered_day2.bam
 
 echo 'Creating VCF...'
-bcftools mpileup -q30 -Ou -f dataset/grch38.chr22.fasta.bgz.gz filtered_day2.bam | bcftools call -mv -Oz -o amostra-lbb-day2.vcf.gz
+bcftools mpileup -Ou -f dataset/grch38.chr22.fasta.bgz.gz filtered_day2.bam | bcftools call -mv -Oz -o amostra-lbb-day2.vcf.gz
 
 echo 'Limiting to capture regions...'
 tabix -p vcf amostra-lbb-day2.vcf.gz
