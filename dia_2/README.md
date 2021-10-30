@@ -81,3 +81,5 @@ $ samtools flagstat filtered_day2.bam
 $ samtools view filtered_day2.bam | awk '{print $5}' | grep -c '^0$'
 0
 ```
+
+Os TSVs [bruto.tsv](bruto.tsv) e [filtrado.tsv](filtrado.tsv) foram gerados desses dados.
