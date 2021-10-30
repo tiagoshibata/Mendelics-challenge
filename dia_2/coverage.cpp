@@ -1,37 +1,13 @@
-#include <bits/stdc++.h>
+#include <fstream>
+#include <iostream>
 #include <limits>
-namespace {
+#include <span>
+#include <sstream>
+#include <vector>
+
 #define all(x) begin(x), end(x)
-#define rall(x) rbegin(x), rend(x)
 
-template <class ...Args> auto &read_var(Args& ...args) { return (std::cin >> ... >> args); }
-template <class T> auto &operator>>(std::istream &is, std::vector<T> &v) {
-    for (auto &x : v)
-        is >> x;
-    return is;
-}
-template <typename T1, typename T2> auto &operator<<(std::ostream &os, const std::pair<T1, T2> &p);
-template <class T> auto &operator<<(std::ostream &os, const std::vector<T> &v) {
-    for (const auto& x : v)
-        os << x << '\n';
-    return os;
-}
-template <typename T1, typename T2> auto &operator<<(std::ostream &os, const std::pair<T1, T2> &p) {
-    os << p.first << ' ' << p.second;
-    return os;
-}
-
-#ifdef TIAGOSHIBATA_DEBUG
-template<typename T> void _watch(string name, T arg) {
-    cerr << name << " is " << arg << '\n';
-}
-template<typename T1, typename... T2> void _watch(string names, T1 arg, T2... args) {
-    cerr << names.substr(0, names.find(',')) << " is " << arg << " | ";
-    _watch(names.substr(names.find(',') + 2), args...);
-}
-#define watch(...) _watch(#__VA_ARGS__, __VA_ARGS__)
-#endif
-
+namespace {
 std::vector<int> compute_coverage(const char *filename) {
     std::ifstream stream(filename);
     std::vector<int> endpoints(51000000);
@@ -83,6 +59,15 @@ std::vector<bed_entry> read_bed(const char *filename) {
     }
     return entries;
 }
+
+void plot(const std::span<int>& data, const char *filename) {
+    // Plot to a ppm image
+    std::ofstream stream(filename);
+    stream << "P6\n" << data.size() << " 1\n255\n";
+    for (auto pixel : data) {
+        stream << '\0' << static_cast<char>(std::min(std::max(pixel - 255, 0), 255)) << static_cast<char>(std::min(pixel, 255));
+    }
+}
 }
 
 int main(int argc, char **argv) {
@@ -105,6 +90,8 @@ int main(int argc, char **argv) {
             min_coverage = std::min(min_coverage, coverage[i]);
         }
         std::cout << "Region " << region.id << ": min coverage = " << min_coverage << ", max coverage = " << max_coverage << '\n';
+        std::string filename = region.id + ".ppm";
+        plot(std::span<int>(&coverage[region.start], region.end - region.start), filename.c_str());
         region_min_coverage.emplace_back(min_coverage, region.id);
     }
 

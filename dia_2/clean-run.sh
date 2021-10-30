@@ -33,3 +33,6 @@ bgzip amostra-lbb-day2-capture-regions.vcf
 echo 'Analysing regions with low coverage...'
 clang++ -std=c++17 -Wall -Wextra -O3 dia_2/coverage.cpp -o coverage
 ./coverage <(samtools view filtered_day2.bam) <(zcat dataset/coverage.bed.gz)
+for f in *.ppm ; do
+    convert $f -resize 50%x100% images/${f/ppm/png}
+done
