@@ -68,6 +68,22 @@ void plot(const std::span<int>& data, const char *filename) {
         stream << '\0' << static_cast<char>(std::min(std::max(pixel - 255, 0), 255)) << static_cast<char>(std::min(pixel, 255));
     }
 }
+
+void write_bed_uncovered_regions(const std::vector<int>& coverage) {
+    std::ofstream stream("uncovered.bed");
+    int start = -1;  // start of uncovered region
+    for (std::size_t i = 0; i < coverage.size(); ++i) {
+        if (coverage[i]) {
+            if (start != -1) {
+                // End of uncovered region
+                stream << "chr22\t" << start << '\t' << i << '\n';
+                start = -1;
+            }
+        } else if (start == -1) {
+            start = i;
+        }
+    }
+}
 }
 
 int main(int argc, char **argv) {
@@ -81,7 +97,7 @@ int main(int argc, char **argv) {
     auto coverage = compute_coverage(argv[1]);
     auto regions = read_bed(argv[2]);
 
-    std::vector<std::pair<int, std::string>> region_min_coverage;
+    std::vector<std::pair<std::pair<int, int>, std::string>> region_min_coverage;
     region_min_coverage.reserve(regions.size());
     for (const auto& region : regions) {
         int max_coverage = 0, min_coverage = std::numeric_limits<int>::max();
@@ -92,14 +108,16 @@ int main(int argc, char **argv) {
         std::cout << "Region " << region.id << ": min coverage = " << min_coverage << ", max coverage = " << max_coverage << '\n';
         std::string filename = region.id + ".ppm";
         plot(std::span<int>(&coverage[region.start], region.end - region.start), filename.c_str());
-        region_min_coverage.emplace_back(min_coverage, region.id);
+        region_min_coverage.emplace_back(std::make_pair(min_coverage, max_coverage), region.id);
     }
 
-    sort(all(region_min_coverage));
+    std::sort(all(region_min_coverage));
     std::cout << "Minimum coverage in each region:\n";
-    for (const auto& [coverage, id] : region_min_coverage) {
-        std::cout << coverage << ' ' << id << '\n';
+    for (const auto& [min_max_coverage, id] : region_min_coverage) {
+        std::cout << min_max_coverage.first << ' ' << min_max_coverage.second << ' ' << id << '\n';
     }
+
+    write_bed_uncovered_regions(coverage);
 
     return 0;
 }
