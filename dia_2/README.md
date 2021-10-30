@@ -1,6 +1,6 @@
 # Solução do desafio Mendelics da LBB [(link)](https://github.com/mendelics/lbb-mendelics-2021/blob/main/Dia_2/README.md)
 
-As tarefas foram implementadas em Bash e C++. As mesmas dependências da [tarefa 1](../README.md) são usadas, com adição de [sambamba](https://lomereiter.github.io/sambamba/index.html) para filtragem de arquivos BAM, e clang para compilar C++.
+As tarefas foram implementadas em Bash e C++. As mesmas dependências da [tarefa 1](../README.md) são usadas, com adição de [sambamba](https://lomereiter.github.io/sambamba/index.html) para filtragem de arquivos BAM, mosdepth para calcular cobertura, e clang para compilar C++.
 
 ## Tarefa
 
@@ -28,7 +28,7 @@ E na `AC004471.1_1`, que não está muito coberta no início:
 
 ![AC004471.11](./AC004471.1_1.png)
 
-Utilizei o mosdepth para buscar pelas regiões não cobertas do mapeamento:
+Utilizei o mosdepth para buscar pelas regiões de captura não cobertas do mapeamento:
 
 ```
 $ mosdepth --by dataset/coverage.bed mosdepth-output mapped_day2.bam
