@@ -29,3 +29,7 @@ tabix -p vcf amostra-lbb-day2.vcf.gz
 tabix -R dataset/coverage.bed.gz amostra-lbb-day2.vcf.gz > amostra-lbb-day2-capture-regions.vcf
 bgzip amostra-lbb-day2-capture-regions.vcf
 # bcftools mpileup -C10 -Ou -f dataset/grch38.chr22.fasta.bgz.gz mapped.bam | bcftools call -mv -Oz -o amostra-lbb.vcf.gz
+
+echo 'Analysing regions with low coverage...'
+clang++ -std=c++17 -Wall -Wextra -O3 dia_2/coverage.cpp -o coverage
+./coverage <(samtools view filtered_day2.bam) <(zcat dataset/coverage.bed.gz)
