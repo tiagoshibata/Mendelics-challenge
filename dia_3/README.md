@@ -10,4 +10,9 @@ O arquivo `amostra-lbb-day2-capture-regions.vcf.gz` do dia 2 foi utilizado.
 
 Segui passos dados na [documentação do snpEff](https://pcingola.github.io/SnpEff/se_inputoutput/) para realizar anotações. Primeiramente, o banco de dados do ncbi dbSNP2.0 foi usado para anotar variações comuns (https://www.ncbi.nlm.nih.gov/snp/docs/products/vcf/redesign/). Devido ao tamanho do arquivo e o tempo de competição, variações comuns (common) foram usadas ao invés de All.
 
-
+```
+wget 'ftp://ftp.ncbi.nlm.nih.gov/snp/organisms/human_9606_b151_GRCh37p13/VCF/00-common_all.vcf.gz'
+tabix amostra-lbb-day2-capture-regions.vcf.gz
+tabix ./00-common_all.vcf.gz
+bcftools annotate -a 00-common_all.vcf.gz -c ID -o amostra-lbb2-capture-regions-annotated.vcf  amostra-lbb-day2-capture-regions.vcf.gz
+```
