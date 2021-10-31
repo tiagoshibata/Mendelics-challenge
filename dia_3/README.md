@@ -58,4 +58,11 @@ $ grep stop_lost amostra-lbb2-capture-regions-annotated-snpEff.vcf  # Nenhuma
 
 > Variante no gnomAD v3.1.1 com MAF < 0.01
 
-TODO
+Não tive tempo de integrar meus resultados com o gnomAD. No entanto, é possível buscar as entradas uma a uma na interface web e buscar por uma com frequência baixa. Por exemplo, essas mutações:
+
+```
+chr22   16988159        .       C       A       76.2337 .       DP=47;VDB=0.545078;SGB=-0.69168;RPBZ=-1.24531;BQBZ=-2.00175;FS=0;MQ0F=0;AC=1;AN=2;DP4=3,23,0,19;MQ=42;ANN=A|stop_gained|HIGH|GAB4|GAB4|transcript|NM_001037814.1|protein_coding|3/10|c.487G>T|p.Gly163*|595/2630|487/1725|163/574||;LOF=(GAB4|GAB4|1|1.00);NMD=(GAB4|GAB4|1|1.00)  GT:PL   0/1:109,0,210
+chr22   41940168        .       G       A       225.417 .       DP=192;VDB=3.71066e-07;SGB=-0.693147;FS=0;MQ0F=0;AC=2;AN=2;DP4=0,0,60,98;MQ=42;ANN=A|stop_gained|HIGH|CENPM|CENPM|transcript|NM_001110215.2|protein_coding|1/2|c.7C>T|p.Arg3*|52/557|7/177|3/58||,A|downstream_gene_variant|MODIFIER|CENPM|CENPM|transcript|NM_001304371.1|protein_coding||c.*4968C>T|||||4753|,A|intron_variant|MODIFIER|CENPM|CENPM|transcript|NM_024053.4|protein_coding|5/5|c.403-972C>T||||||,A|intron_variant|MODIFIER|CENPM|CENPM|transcript|NM_001304370.1|protein_coding|4/4|c.301-972C>T||||||,A|intron_variant|MODIFIER|CENPM|CENPM|transcript|NM_001304372.1|protein_coding|4/4|c.*8-972C>T||||||,A|intron_variant|MODIFIER|CENPM|CENPM|transcript|NM_001304373.1|protein_coding|3/3|c.209-972C>T||||||,A|intron_variant|MODIFIER|CENPM|CENPM|transcript|NM_001002876.2|protein_coding|4/4|c.311-972C>T||||||   GT:PL   1/1:255,255,0
+```
+
+Correspondem a [Single nucleotide variant: 22-17469049 - C-A(GRCh37)](https://gnomad.broadinstitute.org/variant/22-17469049-C-A?dataset=gnomad_r2_1) e [Single nucleotide variant: 22-42336172 - G-A(GRCh37)](https://gnomad.broadinstitute.org/variant/22-42336172-G-A?dataset=gnomad_r2_1), respectivamente.
